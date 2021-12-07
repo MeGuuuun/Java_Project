@@ -1,0 +1,29 @@
+import java.io.*;
+import java.net.*;
+
+public class sendThread extends Thread {
+	Socket socket;
+	String msg;
+	
+	OutputStream outStream;
+	DataOutputStream dataOutStream;
+	
+	sendThread(Socket _s, String _m){
+		socket = _s;
+		msg = _m;
+	}
+	
+	public void run() {
+		
+		try {
+			outStream = socket.getOutputStream();
+			dataOutStream = new DataOutputStream(outStream);
+			
+			while(true) {
+				dataOutStream.writeUTF(msg);
+			}
+		}catch(Exception e) {
+			System.out.println("Client > 채팅 메세지 전송 실패 ");
+		}
+	}
+}

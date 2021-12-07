@@ -1,0 +1,27 @@
+import java.io.DataOutputStream;
+import java.io.OutputStream;
+import java.net.*;
+
+public class ChatSend {
+	Socket mySocket;
+	Server server;
+	String msg;
+	String uName;
+	
+	ChatSend(Socket _s, String _m, String _mm){
+		mySocket = _s;
+		msg = _m;
+		uName = _mm;
+		
+		try {
+			OutputStream outStream = mySocket.getOutputStream();
+			DataOutputStream dataOutStream = new DataOutputStream(outStream);	
+		
+			
+			outStream = mySocket.getOutputStream(); //outStream 갱신				dataOutStream = new DataOutputStream(outStream);
+			dataOutStream.writeUTF(uName+" : " + msg);
+		}catch(Exception e) {
+			System.out.println("Server > 채팅 전송 실패 ");
+		}
+	}
+}

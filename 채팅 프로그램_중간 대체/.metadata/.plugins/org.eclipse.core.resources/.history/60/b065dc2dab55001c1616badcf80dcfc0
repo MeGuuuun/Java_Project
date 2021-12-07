@@ -1,0 +1,20 @@
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class SocketChecker {
+	Socket socket;
+	Server server;
+	String uName;
+	
+	
+	
+	SocketChecker(Socket _s, Server _ss,String _m){
+		socket = _s;
+		server = _ss;
+		uName = _m;
+	
+	
+	
+	}
+}

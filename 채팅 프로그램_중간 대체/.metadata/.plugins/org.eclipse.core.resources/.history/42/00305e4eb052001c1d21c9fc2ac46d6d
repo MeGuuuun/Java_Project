@@ -1,0 +1,12 @@
+import java.net.*;
+
+public class Operator {
+	Socket socket;
+	
+	
+	Operator(Socket _s){
+		socket = _s;
+		
+		LoginFrame lf = new LoginFrame(socket);
+	}
+}

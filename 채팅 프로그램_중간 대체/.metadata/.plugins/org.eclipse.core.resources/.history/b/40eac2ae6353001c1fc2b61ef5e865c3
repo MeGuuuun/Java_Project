@@ -1,0 +1,12 @@
+import java.io.*;
+import java.net.*;
+
+public class NameSend {
+	Socket socket;
+	String name;
+	
+	NameSend(Socket _s, String _m){
+		socket = _s;
+		name = _m;
+	}
+}

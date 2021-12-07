@@ -1,0 +1,64 @@
+import java.io.*;
+import java.io.IOException;
+import java.net.*;
+import java.net.SocketException;
+import java.util.ArrayList;
+
+public class Server {
+	ServerSocket ss= null; //서버 소켓 필드 선언 
+	ArrayList<ConnectedClient> clients = new ArrayList<ConnectedClient>();
+	//
+	
+	public static void main(String[] args) {
+		Server server = new Server();
+		try {
+			server.ss = new ServerSocket(8080);
+			System.out.println("Server> Server Socket is created...");
+			while(true) {
+				Socket socket = server.ss.accept(); //클라이언트 연결을 받는 메소드 + 그걸 담는 소켓
+				ConnectedClient c = new ConnectedClient(socket);
+				server.clients.add(c);
+				c.start(); //스레드를 시작하는 메소드 
+			}
+		}catch(SocketException e) {
+			System.out.println("Server> 소켓 예외 발생 ");
+		} catch(IOException e) {
+			System.out.println("Server> 입출력 예외 발생 ");
+		}
+	}
+
+}
+
+
+class ConnectedClient extends Thread { //클라이언트 각각의 소켓을 처리하기 위해 각각의 스레드가 필요 / 스레드 상속 
+	Socket socket;
+	OutputStream outStream;
+	DataOutputStream dataOutStream;
+	InputStream inStream;
+	DataInputStream dataInStream;
+	
+	ConnectedClient(Socket _s) {
+		this.socket = _s;
+	}
+	public void run() {
+		try {
+			System.out.println("Server> "+this.socket.toString()+"에서의 연결이 되었습니다.");
+			
+			//클라이언트와 값을 주고 받기 위해 outputStream inputStream 사용 
+			outStream = this.socket.getOutputStream();
+			dataOutStream = new DataOutputStream(outStream);
+			inStream = this.socket.getInputStream();
+			dataInStream = new DataInputStream(inStream);
+			
+			dataOutStream.writeUTF("Welcome to Server!!");
+			while(true) {
+				String msg = dataInStream.readUTF();
+				System.out.println("Server> "+this.socket.toString()+": "+msg);
+			} //클라이언트가 주는 데이터를 받기 위해 계속 read 상태를 유지 
+			
+		}catch(Exception e) {
+			System.out.println("Server> 예외 발생 ");
+		}
+	}
+	
+}

@@ -1,0 +1,12 @@
+
+public class User {
+	String id = null;
+	String pass = null;
+	//String name = null;
+	//String number = null;
+	
+	User(String _id, String _pass) {
+		id = _id;
+		pass = _pass;
+	}
+}

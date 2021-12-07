@@ -1,0 +1,21 @@
+import java.io.*;
+import java.net.*;
+import java.util.StringTokenizer;
+
+
+public class MakeName {
+	StringTokenizer st;
+	
+	String nameTag = "NAME";
+	
+	
+	MakeName(String _m){
+		String msg = _m;
+		
+		st = new StringTokenizer(msg, "!");
+		
+		String tag = st.nextToken();
+		String name = st.nextToken();
+		
+	}
+}

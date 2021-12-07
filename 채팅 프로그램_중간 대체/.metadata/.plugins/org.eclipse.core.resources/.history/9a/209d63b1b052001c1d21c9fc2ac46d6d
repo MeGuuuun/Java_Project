@@ -1,0 +1,61 @@
+import java.io.DataInputStream;
+import java.io.InputStream;
+import java.net.Socket;
+import java.util.StringTokenizer;
+
+public class recvThread extends Thread{
+	Socket socket;
+	String msg;
+	StringTokenizer st;
+	
+	Client c = new Client();
+	
+	
+	InputStream inStream;
+	DataInputStream dataInStream;
+	
+	String loginTag = "LOGIN";
+	String joinTag = "JOIN";
+	String confirmTag = "LOGIN_OK";
+	String chatTag = "CHAT";
+	String failedTag = "LOGIN_FAILED";
+	
+	
+	
+	recvThread(Socket _s){
+		socket = _s;
+	}
+	
+	public void run() {
+		
+		try {
+			inStream = socket.getInputStream();
+			dataInStream = new DataInputStream(inStream);
+			
+			while(true) {
+				String msg = dataInStream.readUTF(); //readUTF로 서버에서 오는 메세지 읽음 
+				
+				st = new StringTokenizer(msg, "!");
+				
+				if(msg.equals(confirmTag)) {
+					lf.dispose();
+					nf.setVisible(true);
+				}
+				if(msg.equals(failedTag)) {
+					lf.typeId.setText("");
+					lf.typePassword.setText("");
+				}
+				if(msg.equals(chatTag)) {
+					String tag = st.nextToken();
+					String message = st.nextToken();
+					cf.recv.append(message);
+				}
+			}
+		}catch(Exception e) {
+			System.out.println("Client > 서버 데이터 수신 실패 ");
+		}
+	}
+}
+public class recvThread {
+
+}

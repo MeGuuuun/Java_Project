@@ -1,0 +1,127 @@
+import java.io.*;
+import java.net.*;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import java.util.*;
+
+public class Server {
+	ServerSocket ss= null; //서버 소켓 필드 선언 
+	ArrayList<ConnectedClient> clients = new ArrayList<ConnectedClient>();
+	//클라이언트 소켓 관리할 ArrayList 
+	
+	public static void main(String[] args) {
+		Server server = new Server();
+		
+		
+		try {
+			server.ss = new ServerSocket(60000); //서버 소켓 생성 
+			System.out.println("Server> Server Socket is created...");
+			
+			while(true) {
+				Socket socket = server.ss.accept(); //클라이언트 연결을 받는 메소드 + 그걸 담는 소켓
+				ConnectedClient c = new ConnectedClient(socket, server);
+				server.clients.add(c);
+				c.start();
+			}
+		}catch(Exception e) {
+			System.out.println("Server> 소켓 예외 발생 ");
+		} 
+	}
+
+}
+
+class ConnectedClient extends Thread{
+	Socket socket;
+	Server server;
+	String msg;
+	StringTokenizer st;
+	String uName=null;
+	
+	InputStream inStream;
+	DataInputStream dataInStream;
+	OutputStream outStream;
+	DataOutputStream dataOutStream;
+	
+	String loginTag = "LOGIN";
+	String joinTag = "JOIN";
+	String chatTag = "CHAT";
+	String nameTag = "NAME";
+	String log_confirmTag = "LOGIN_OK";
+	String failedTag = "FAILED";
+	String connectTag = "CONNECTED";
+	String unconnectTag = "UNCONNECTED";
+	
+	
+	ConnectedClient(Socket _s, Server _ss){
+		socket = _s;
+		server = _ss;
+	}
+	
+	public void run() {
+		
+		try {
+			inStream = socket.getInputStream();
+			dataInStream = new DataInputStream(inStream);
+			outStream = socket.getOutputStream();
+			dataOutStream = new DataOutputStream(outStream);
+			
+			if(uName!=null) {
+				if(socket.isClosed()) {
+					for(int i=0;i<server.clients.size();i++) {
+						OutputStream os = server.clients.get(i).socket.getOutputStream();
+						DataOutputStream dos = new DataOutputStream(os);
+						dos.writeUTF(unconnectTag+"!"+uName);
+					}
+				}else {
+					for(int i=0;i<server.clients.size();i++) {
+						OutputStream os = server.clients.get(i).socket.getOutputStream();
+						DataOutputStream dos = new DataOutputStream(os);
+						dos.writeUTF(connectTag+"!"+uName);
+					}
+				}
+			}
+			
+			while(true) {
+				
+				String msg=null;
+				msg = dataInStream.readUTF();
+				st = new StringTokenizer(msg, "!");
+				System.out.println(msg);
+				
+				String tag = st.nextToken();
+				
+				if(tag.equals(loginTag)) {
+					LoginChecker lc_ = new LoginChecker(msg, socket);
+				}
+				if(tag.equals(joinTag)) {
+					AddUserInfo us = new AddUserInfo(socket, msg);
+				}
+				if(tag.equals(nameTag)) {
+					uName = st.nextToken();
+					dataOutStream.writeUTF("FINE");
+					for(int i=0;i<server.clients.size();i++) {
+						OutputStream os = server.clients.get(i).socket.getOutputStream();
+						DataOutputStream dos = new DataOutputStream(os);
+						dos.writeUTF(chatTag+"!"+uName+" 님이 입장하셨습니다. ");
+					}
+				}
+				
+				if(tag.equals(chatTag)) {
+					String message = st.nextToken();
+					for(int i=0;i<server.clients.size();i++) {
+						OutputStream os = server.clients.get(i).socket.getOutputStream();
+						DataOutputStream dos = new DataOutputStream(os);
+						dos.writeUTF(chatTag+"!"+uName+" : "+message);
+					}
+				}
+			}
+					
+			
+		}catch(Exception e) {
+			System.out.println("Server > 클라이언트 데이터 수신 오류 ");
+			System.out.println(e.toString());
+		}
+	}
+}
+

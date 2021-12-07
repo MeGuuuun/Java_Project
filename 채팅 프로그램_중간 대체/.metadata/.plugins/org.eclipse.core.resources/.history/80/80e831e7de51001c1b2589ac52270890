@@ -1,0 +1,29 @@
+import java.io.*;
+import java.net.*;
+import java.util.StringTokenizer;
+
+
+public class MakeName {
+	StringTokenizer st;
+	Socket socket;
+	String msg;
+	
+	String nameTag = "NAME";
+	
+	
+	MakeName(Socket _s, String _m){
+		socket = _s;
+		msg = null;
+		
+		st = new StringTokenizer(msg, "!");
+		
+		String tag = st.nextToken();
+		String name = st.nextToken();
+		
+		OutputStream outStream = socket.getOutputStream();
+		DataOutputStream dataOutStream = new DataOutputStream(outStream);
+		
+		
+		
+	}
+}

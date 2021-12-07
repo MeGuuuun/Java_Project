@@ -1,0 +1,61 @@
+import java.io.*;
+import java.net.*;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class LoginChecker {
+	Socket socket;
+	StringTokenizer st;
+	
+	FileChecker fc = new FileChecker();
+	
+	String confirmTag = "LOGIN_OK";
+	String failedTag = "LOGIN_FAILED";
+	
+	LoginChecker(String _m, Socket _s) {
+		String msg = _m;
+		Socket socket = _s;
+		
+		System.out.println(msg);
+		
+		st = new StringTokenizer(msg, "!");
+		String tag = st.nextToken();
+		String id = st.nextToken();
+		String pass = st.nextToken();
+		
+		
+		try {
+			OutputStream outStream = socket.getOutputStream();
+			DataOutputStream dataOutStream = new DataOutputStream(outStream);
+			
+			if(Check(id, pass)) {
+				
+				dataOutStream.writeUTF(confirmTag);
+			}
+			else {
+				System.out.println("Server > 로그인 확인 실패 ");
+				dataOutStream.writeUTF(failedTag);
+			}
+			
+		}catch(Exception e) {
+			System.out.println("Server > 로그인 확인 정보 전송 오류 ");
+		}
+		
+		
+		
+		
+	}
+	
+	boolean Check(String _id, String _pass) {
+		boolean flag = false;
+		for(int i=0; i<fc.userInfo.size() ;i++) {
+			if(fc.userInfo.get(i).id.equals(_id) && fc.userInfo.get(i).pass.equals(_pass)) {
+				flag = true;
+			} //get 메소드 = i 인덱스를 가진 데이터 값 가져오기 
+		}
+		return flag;
+	}
+}
+
+

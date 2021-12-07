@@ -1,0 +1,35 @@
+import java.io.*;
+import java.net.*;
+import java.util.Scanner;
+
+public class Client {
+	Socket mySocket = null;
+	
+
+	public static void main(String[] args) {
+		Client client = new Client();
+		
+		OutputStream outStream = null;
+		DataOutputStream dataOutStream = null;
+		Scanner sc = new Scanner(System.in);
+		
+		try {
+			client.mySocket = new Socket("localhost", 8080); //IP와 포트번호 
+			System.out.println("Client > 서버로 연결되었습니다. ");
+
+			outStream = client.mySocket.getOutputStream();
+			dataOutStream = new DataOutputStream(outStream);
+
+			while(true) {
+				String msg = null;
+				System.out.println("Enter message > ");
+				msg = sc.nextLine();
+				dataOutStream.writeUTF(msg);
+			}
+		}catch(Exception e) { 
+			
+		}
+		
+	}
+
+}
