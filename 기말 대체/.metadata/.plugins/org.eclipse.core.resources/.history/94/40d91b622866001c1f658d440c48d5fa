@@ -1,0 +1,22 @@
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class Search extends JFrame {
+	
+	Search(){
+		setTitle("🐹비밀 다이어리🐹");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(panel);
+		
+		
+		setSize(300,400);
+		setResizable(false);
+		
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+	}
+}

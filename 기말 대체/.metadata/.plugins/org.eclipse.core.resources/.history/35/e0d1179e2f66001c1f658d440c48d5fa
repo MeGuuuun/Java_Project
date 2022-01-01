@@ -1,0 +1,25 @@
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class ChangePass extends JFrame {
+	JPanel panel = new JPanel();
+	JLabel pass = new JLabel("변경할 비밀번호 입력 : ");
+	JTextField typePass = new JTextField();
+	JButton ok = new JButton("변경");
+	
+	ChangePass() {
+		setTitle("날짜별 다이어리 검색");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(panel);
+		
+		setSize(300,250);
+		setResizable(false);
+		
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+	}
+}

@@ -1,9 +1,0 @@
-import java.io.*;
-import java.net.*;
-import java.util.StringTokenizer;
-
-
-public class MakeName {
-	Socket socket;
-	StringTokenizer st;
-}
