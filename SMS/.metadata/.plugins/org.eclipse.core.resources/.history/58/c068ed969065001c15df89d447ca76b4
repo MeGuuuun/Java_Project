@@ -1,0 +1,8 @@
+
+public class StudentManagementSystem {
+	
+	public static void main(String[] args) {
+		FileChecker fc = new FileChecker();
+		LoginFrame lf = new LoginFrame();
+	}
+}

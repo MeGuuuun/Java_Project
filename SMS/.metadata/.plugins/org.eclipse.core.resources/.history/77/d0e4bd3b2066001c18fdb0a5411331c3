@@ -1,0 +1,45 @@
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class DeleteFrame extends JFrame {
+	
+	JPanel panel = new JPanel(new BorderLayout());
+	JPanel main = new JPanel(new FlowLayout());
+	JPanel btn = new JPanel(new FlowLayout());
+	
+	JLabel name = new JLabel("이름 : ");
+	JTextField typeName = new JTextField();
+	JLabel num = new JLabel("학번 : ");
+	JTextField typeNum = new JTextField();
+	
+	JButton ok = new JButton("확인");
+	JButton cancel = new JButton("취소");
+	
+	DeleteFrame(){
+		setTitle("학생 정보 삭제");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(panel);
+		
+		panel.add(main, BorderLayout.CENTER);
+		panel.add(main, BorderLayout.SOUTH);
+		
+		main.add(name);
+		main.add(typeName);
+		main.add(num);
+		main.add(typeNum);
+		
+		
+		
+		
+		setSize(310,280);
+		setVisible(false);
+		setResizable(false);
+		
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+	}
+}

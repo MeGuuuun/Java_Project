@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import java.net.*;
+import java.io.*;
+import java.sql.*;
+
+//공유된 user 파일을 읽어 MySQL에 데이터 추가 
+public class ReadUserFile {
+	File dataFile = new File("/Users/jiminpark/Desktop/SMS/SMS/users.txt");
+	String readData = null;
+	StringTokenizer st;
+	
+	ReadUserFile(){
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(dataFile));
+			
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	void insertUser(String _s, String _ss) {
+		Connection con = null;
+		Statement stmt = null;
+		String url = "jdbc:mysql://localhost:3306/university?serverTimezone=Asia/Seoul";
+		String user = "root";
+		String passwd = "1234";
+		
+		String id = _s;
+		String pass = _ss;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch(java.lang.ClassNotFoundException e) {
+			System.err.print("ClassNotFoundException: "); 
+			System.err.println(e.getMessage());
+			return;
+		}
+		
+		String insertString = "INSERT INTO user (id, password) VALUES ";
+
+		try {
+			String passString = insertString + "('"+ id +"', '"+ pass + "' )";
+			con = DriverManager.getConnection(url, user, passwd);	
+			stmt = con.createStatement();
+			stmt.executeUpdate(passString);
+			System.out.println("insert finished");
+	
+		} catch(Exception ex) {
+			System.err.println("SQLException: " + ex.getMessage());
+		}
+		finally {
+        		try {
+        			if (stmt != null) stmt.close();
+                	if (con != null) con.close();
+               	} catch (Exception e) {}
+      	 	}
+	}
+	
+}

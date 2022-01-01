@@ -1,0 +1,73 @@
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class NewFrame extends JFrame {
+	
+	JPanel panel = new JPanel(new BorderLayout());
+	JPanel main = new JPanel(new FlowLayout());
+	JPanel btn = new JPanel(new FlowLayout());
+	
+	JLabel depart = new JLabel("학부/학과 : ");
+	JTextField typeDepart = new JTextField();
+	JLabel year = new JLabel("학년 : ");
+	JTextField typeYear = new JTextField();
+	JLabel name = new JLabel("이름 : ");
+	JTextField typeName = new JTextField();
+	JLabel grade = new JLabel("학부생/대학원생 : ");
+	JTextField typeGrade = new JTextField();
+	JLabel num = new JLabel("학번 : ");
+	JTextField typeNum = new JTextField();
+	
+	JButton ok = new JButton("확인");
+	JButton cancel = new JButton("취소");
+	
+	NewFrame(){
+		setTitle("학생 등록");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(panel);
+		
+		panel.add(main, BorderLayout.CENTER);
+		panel.add(btn, BorderLayout.SOUTH);
+		
+		main.add(depart);
+		main.add(typeDepart);
+		main.add(year);
+		main.add(typeYear);
+		main.add(name);
+		main.add(typeName);
+		main.add(grade);
+		main.add(typeGrade);
+		main.add(num);
+		main.add(typeNum);
+		
+		btn.add(ok);
+		btn.add(cancel);
+		
+		depart.setPreferredSize(new Dimension(100,30));
+		typeDepart.setPreferredSize(new Dimension(150,30));
+		year.setPreferredSize(new Dimension(100,30));
+		typeYear.setPreferredSize(new Dimension(150,30));
+		name.setPreferredSize(new Dimension(100,30));
+		typeName.setPreferredSize(new Dimension(150,30));
+		grade.setPreferredSize(new Dimension(100,30));
+		typeGrade.setPreferredSize(new Dimension(150,30));
+		num.setPreferredSize(new Dimension(100,30));
+		typeNum.setPreferredSize(new Dimension(150,30));
+		
+		ok.setPreferredSize(new Dimension(60,40));
+		cancel.setPreferredSize(new Dimension(60,40));
+		
+		
+		
+		setSize(310,300);
+		setVisible(false);
+		setResizable(false);
+		
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+	}
+}

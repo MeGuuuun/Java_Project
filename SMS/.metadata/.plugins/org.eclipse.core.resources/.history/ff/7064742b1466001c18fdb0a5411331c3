@@ -1,0 +1,31 @@
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class NewFrame extends JFrame {
+	
+	JPanel panel = new JPanel(new BorderLayout());
+	JPanel main = new JPanel(new FlowLayout());
+	JPanel btn = new JPanel();
+	
+	JLabel depart = new JLabel("학부/학과 : ");
+	JTextField typeDepart = new JTextfield();
+	JLabel year = new JLabel("학년 : ");
+	JtextField = typeYear = new JTextField();
+	JLabel name = new JLabel("이름 : ");
+	NewFrame(){
+		setTitle("학생 등록");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		setSize(280,240);
+		setVisible(false);
+		setResizable(false);
+		
+		Dimension frameSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+	}
+}
